@@ -940,7 +940,9 @@ class RigidBody3DScheme(Scheme):
             pa.ang_mom[i3:i3 + 3] = np.matmul(
                 pa.inertia_tensor_global_frame[i9:i9 + 9].reshape(3, 3),
                 pa.omega[i3:i3 + 3])[:]
-
+            print("set ang vel", np.matmul(
+                pa.inertia_tensor_global_frame[i9:i9 + 9].reshape(3, 3),
+                pa.omega[i3:i3 + 3]))
         self._set_particle_velocities(pa)
 
     def get_solver(self):

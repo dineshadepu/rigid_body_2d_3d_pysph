@@ -106,6 +106,11 @@ class Case0(Application):
         self.scheme.scheme.set_linear_velocity(body, np.array([0.5, 0.5, 0.]))
         self.scheme.scheme.set_angular_velocity(body, np.array([0., 0., 1.]))
 
+        print("moi in pa", body.inertia_tensor_inverse_global_frame[0:9].reshape(3, 3))
+        print("moi body in pa", body.inertia_tensor_inverse_body_frame[0:9].reshape(3, 3))
+        # print("moi in pa", body.inertia_tensor_global_frame[0:9].reshape(3, 3))
+
+        print("ang_mom in pa", body.ang_mom)
         # body.vcm[0] = 0.5
         # body.vcm[1] = 0.5
         # body.omega[2] = 1.
@@ -130,7 +135,7 @@ class Case0(Application):
         from pysph.solver.utils import iter_output
 
         files = self.output_files
-        files = files[3:]
+        files = files[:]
         t, total_energy = [], []
         x, y = [], []
         for sd, body in iter_output(files, 'body'):
@@ -140,6 +145,9 @@ class Case0(Application):
                                                           body.v[:]**2.)))
             x.append(body.xcm[0])
             y.append(body.xcm[1])
+            print("R is", body.R)
+            print("ang_mom is", body.ang_mom)
+            print("omega is", body.omega)
 
         import matplotlib
         import os
